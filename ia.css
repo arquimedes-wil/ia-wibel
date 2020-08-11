@@ -1,0 +1,58 @@
+img{
+    width: 60%;   
+}
+
+h3{
+    font-style: italic;
+    margin: 0;
+}
+body{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 2%;
+    text-align: center;
+}
+.dialogo{
+    border-radius: 4px;
+    border: solid;
+    border-color: rgb(83, 115, 201);
+}
+.interaccion{
+    box-sizing: border-box;
+    height: 90%;
+    overflow-y: scroll;
+    height: 330px;
+    padding: 0 2%;
+}
+.dialogo .escribir{
+    box-sizing: border-box;
+    float: right;
+    width: 70%;
+}
+.wibel{
+    float: left;
+    border-style: solid;
+    border-color: blue;
+    text-align: left;
+    border-radius: 5px;
+    color: blue;
+    font-style: italic;
+    padding: 0.5%;
+}
+.usuario{
+    float: right;
+    border-style: solid;
+    border-color: green;
+    text-align: right;
+    border-radius: 5px;
+    color: green;
+    font-style: italic;
+    padding: 0.5%;
+}
+
+input{
+    box-sizing: border-box;
+    width: 90%;
+    border-style: dotted;
+    border-color: green;    
+}
