@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="ia.css">
+
+    <title>AVI</title>
+</head>
+
+<body>
+    <div class="vista"><input type="file" id="file-input" /><h3>AVI</h3>
+        <pre id="contenido-archivo"> <img
+                src="https://www.silicon.es/wp-content/uploads/2014/06/pepper_robot-humanoide.png" alt="avatar">
+        </pre >
+        
+    </div>
+    <div class="dialogo">
+        <div id="interaccion" class="interaccion">
+            <p class="wibel">Por favor, escribe tu nombre para conversar</p> <br>
+
+        </div>
+        <div class="escribir"><input id="texto" type="text" onkeydown="dialogarkey()" placeholder="escribe aqui"><button
+                onclick="microfono()">&Omega;</button><button onclick="dialogar()">>></button></div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.4.456/build/pdf.min.js"></script>
+<script src="annyang.js"> </script>
+<script src="ia.js"></script>
+<script src="memoria.js"></script>
+
+
+</html>

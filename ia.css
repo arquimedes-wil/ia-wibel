@@ -19,9 +19,8 @@ body{
 }
 .interaccion{
     box-sizing: border-box;
-    height: 90%;
     overflow-y: scroll;
-    height: 330px;
+    height: 450px;
     padding: 0 2%;
 }
 .dialogo .escribir{
@@ -49,10 +48,13 @@ body{
     font-style: italic;
     padding: 0.5%;
 }
-
+.vista{
+    height: 450px;
+    overflow-y: scroll;
+}
 input{
     box-sizing: border-box;
-    width: 90%;
+    width: 85%;
     border-style: dotted;
     border-color: green;    
 }
