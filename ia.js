@@ -1,6 +1,5 @@
 dialogo = "";
-nombre = "";
-
+document.getElementById("texto").focus();
 function dialogar() {
   dialogo = document.getElementById("texto").value;
   document.getElementById("interaccion").innerHTML += "<br><p class='usuario'>" + dialogo + "</p><br>";
@@ -22,28 +21,28 @@ function dialogarkey() {
 function hablar() {
 
   if (memoria[dialogo] == undefined) {
-    if (contenidoAleer.indexOf(dialogo) !== -1) {
+    /* if (contenidoAleer.indexOf(dialogo) !== -1) {
       leido();
       document.getElementById("interaccion").innerHTML +=
         "<br><p class='wibel'>" + respuesta2 + "</p><br>";
       speechSynthesis.speak(new SpeechSynthesisUtterance(respuesta2));
       escroll();
-    } else {
+    } else {} */
       respuesta = desconocido[Math.floor(Math.random() * desconocido.length)];
       document.getElementById("interaccion").innerHTML +=
         "<br><p class='wibel'>" + respuesta + "</p><br>";
       speechSynthesis.speak(new SpeechSynthesisUtterance(respuesta));
       escroll();
-    }
+    
 
   } else {
     respuesta = memoria[dialogo][Math.floor(Math.random() * memoria[dialogo].length)];
     if (respuesta == undefined) {
       memoria[dialogo]();
-      respuesta = "esta hecho";
+      respuesta2 = memoriaAccion[Math.floor(Math.random() * memoriaAccion.length)];
       document.getElementById("interaccion").innerHTML +=
-        "<br><p class='wibel'>" + respuesta + "</p><br>";
-      speechSynthesis.speak(new SpeechSynthesisUtterance(respuesta));
+        "<br><p class='wibel'>" + respuesta2 + "</p><br>";
+      speechSynthesis.speak(new SpeechSynthesisUtterance(respuesta2));
       escroll();
     } else {
       document.getElementById("interaccion").innerHTML +=
@@ -54,9 +53,9 @@ function hablar() {
   }
 }
 
-desconocido = ["no entiendo", "perdona, pero nose de que hablas", "lo siento, nose a que te refieres", "en eso no te puedo ayudar", "no conozco el tema", "desconozco el tema"];
 
-//lector de txt
+
+/* //lector de txt
 var contenidoAleer = "";
 var respuesta2 = "";
 function leerArchivo(e) {
@@ -94,48 +93,37 @@ function leido() {
     respuesta2 = matrizParaLeer[matrizParaElegir.indexOf(Math.min.apply(null, matrizParaElegir))];
   }
 }
-
-
-//txt
-
+//---------------------------- */
 //esto es para el reconocimiento de voz
-let rec;
-function microfono() {
-  if (!("webkitSpeechRecognition" in window)) {
-    alert("disculpas, no puedes usar la API");
+function hablayang(dialogo) {
+
+  if (memoria[dialogo] == undefined) {
+      respuesta = desconocido[Math.floor(Math.random() * desconocido.length)];
+      speechSynthesis.speak(new SpeechSynthesisUtterance(respuesta));
   } else {
-    rec = new webkitSpeechRecognition();
-    rec.lang = "es-PE";
-    rec.continuous = true;
-    rec.interimResults = true;
-    rec.addEventListener("result", iniciar);
-  }
-  rec.start();
-}
+    respuesta = memoria[dialogo][Math.floor(Math.random() * memoria[dialogo].length)];
+    if (respuesta == undefined) {
+      memoria[dialogo]();
+      respuesta2 = memoriaAccion[Math.floor(Math.random() * memoriaAccion.length)];
+      speechSynthesis.speak(new SpeechSynthesisUtterance(respuesta2));
 
-function iniciar(event) {
-  for (let i = event.resultIndex; i < event.results.length; i++) {
-    document.getElementById('texto').value = event.results[i][0].transcript;
+    } else {
+      speechSynthesis.speak(new SpeechSynthesisUtterance(respuesta));
+      
+    }
   }
 }
-
-//-----------------------------------------------
-
 //anyang
-/*     if (annyang) {
+    if (annyang) {
         annyang.setLanguage("es-PE");
-
-        // Definamos un comando.
-    const comandos = {'hola':() =>{document.getElementById("interaccion").innerHTML +=
-    "<br><p class='wibel'>" + "hola" + "</p><br>";
-    escroll();},
-    "avi":()=>{dialogar();},
-    "como estas":()=>{alert("quien pregunta");}
+    // Definamos un comando.
+    const comandos = {'ola':() =>{speechSynthesis.speak(new SpeechSynthesisUtterance("SALUDOS"));},
+    "quien eres":()=>{hablayang("quien eres");}
   };
-
     // Agrega nuestros comandos a annyang
     annyang.addCommands(comandos);
-
+    annyang.addCommands(memoria);
+    
     // Empieza a escuchar.
     annyang.start();
-    } */
+    }

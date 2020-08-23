@@ -20,7 +20,7 @@ body{
 .interaccion{
     box-sizing: border-box;
     overflow-y: scroll;
-    height: 450px;
+    height: 550px;
     padding: 0 2%;
 }
 .dialogo .escribir{
@@ -49,7 +49,7 @@ body{
     padding: 0.5%;
 }
 .vista{
-    height: 450px;
+    height: 550px;
     overflow-y: scroll;
 }
 input{
