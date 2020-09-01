@@ -18,24 +18,41 @@ function dialogarkey() {
     dialogar();
   }
 }
+var palabraNueva = false;
+var clave = "";
+var responder = "";
 function hablar() {
 
-  if (memoria[dialogo] == undefined) {
-    /* if (contenidoAleer.indexOf(dialogo) !== -1) {
-      leido();
-      document.getElementById("interaccion").innerHTML +=
-        "<br><p class='wibel'>" + respuesta2 + "</p><br>";
-      speechSynthesis.speak(new SpeechSynthesisUtterance(respuesta2));
-      escroll();
-    } else {} */
-      respuesta = desconocido[Math.floor(Math.random() * desconocido.length)];
-      document.getElementById("interaccion").innerHTML +=
-        "<br><p class='wibel'>" + respuesta + "</p><br>";
-      speechSynthesis.speak(new SpeechSynthesisUtterance(respuesta));
-      escroll();
+  if (memoria[dialogo] == undefined && palabraNueva == false) {//si no encuentra en su memoria escrita
+    if(localStorage.getItem(dialogo)==undefined){//busca en su memoria local aprendida, 
+      //si no encuentra aplica este bloque de codigo
+      respuesta = desconocido[Math.floor(Math.random() * desconocido.length)] + ". " + dialogo;
+    document.getElementById("interaccion").innerHTML +=
+      "<br><p class='wibel'>" + respuesta + "</p><br>";
+    speechSynthesis.speak(new SpeechSynthesisUtterance(respuesta));
+    escroll();
+    palabraNueva = true;
+    clave=dialogo;
+    }else{//si encuentra en su memoria aprendida responde este bloque
+      respuesta =localStorage.getItem(dialogo);
+    document.getElementById("interaccion").innerHTML +=
+      "<br><p class='wibel'>" + respuesta + "</p><br>";
+    speechSynthesis.speak(new SpeechSynthesisUtterance(respuesta));
+    escroll();
+    }
     
-
   } else {
+    if(palabraNueva==true){//aqui anota la nueva palabra en su memoria
+    responder=dialogo;
+    localStorage.setItem(clave, responder);
+    let confirmacionDeGuardado=["okey","de acuerdo","entendido","anotado"];
+    respuesta = confirmacionDeGuardado[Math.floor(Math.random() * confirmacionDeGuardado.length)];
+    document.getElementById("interaccion").innerHTML +=
+      "<br><p class='wibel'>" + respuesta + "</p><br>";
+    speechSynthesis.speak(new SpeechSynthesisUtterance(respuesta));
+    escroll();
+    palabraNueva=false;
+  }else{
     respuesta = memoria[dialogo][Math.floor(Math.random() * memoria[dialogo].length)];
     if (respuesta == undefined) {
       memoria[dialogo]();
@@ -49,57 +66,17 @@ function hablar() {
         "<br><p class='wibel'>" + respuesta + "</p><br>";
       speechSynthesis.speak(new SpeechSynthesisUtterance(respuesta));
       escroll();
-    }
+    }}
   }
 }
 
-
-
-/* //lector de txt
-var contenidoAleer = "";
-var respuesta2 = "";
-function leerArchivo(e) {
-  var archivo = e.target.files[0];
-  if (!archivo) {
-    return;
-  }
-  var lector = new FileReader();
-  lector.onload = function (e) {
-    var contenido = e.target.result;
-    mostrarContenido(contenido);
-    contenidoAleer = contenido;
-  };
-  lector.readAsText(archivo);
-}
-function mostrarContenido(contenido) {
-  var elemento = document.getElementById('contenido-archivo');
-  elemento.innerHTML = contenido;
-}
-document.getElementById('file-input')
-  .addEventListener('change', leerArchivo, false);
-
-function leido() {
-  var UbicacionDePalabra = contenidoAleer.indexOf(dialogo);
-  var textoEntreComas = contenidoAleer.substring(contenidoAleer.lastIndexOf(",", UbicacionDePalabra), contenidoAleer.indexOf(",", UbicacionDePalabra));
-  var textoEntrePuntos = contenidoAleer.substring(contenidoAleer.lastIndexOf(".", UbicacionDePalabra), contenidoAleer.indexOf(".", UbicacionDePalabra));
-  var textoEntreComayPunto = contenidoAleer.substring(contenidoAleer.lastIndexOf(",", UbicacionDePalabra), contenidoAleer.indexOf(".", UbicacionDePalabra));
-  var textoEntrePuntoyComa = contenidoAleer.substring(contenidoAleer.lastIndexOf(".", UbicacionDePalabra), contenidoAleer.indexOf(",", UbicacionDePalabra));
-  matrizParaElegir = [textoEntreComas.length, textoEntrePuntos.length, textoEntrePuntoyComa.length, textoEntreComayPunto.length];
-  matrizParaLeer = [textoEntreComas, textoEntrePuntos, textoEntrePuntoyComa, textoEntreComayPunto];
-  if (Math.min.apply(null, matrizParaElegir) == 0) {
-    matrizParaElegir.splice(matrizParaElegir.indexOf(Math.min.apply(null, matrizParaElegir)), 1, 99999);
-    respuesta2 = matrizParaLeer[matrizParaElegir.indexOf(Math.min.apply(null, matrizParaElegir))];
-  } else {
-    respuesta2 = matrizParaLeer[matrizParaElegir.indexOf(Math.min.apply(null, matrizParaElegir))];
-  }
-}
 //---------------------------- */
 //esto es para el reconocimiento de voz
 function hablayang(dialogo) {
 
   if (memoria[dialogo] == undefined) {
-      respuesta = desconocido[Math.floor(Math.random() * desconocido.length)];
-      speechSynthesis.speak(new SpeechSynthesisUtterance(respuesta));
+    respuesta = desconocido[Math.floor(Math.random() * desconocido.length)];
+    speechSynthesis.speak(new SpeechSynthesisUtterance(respuesta));
   } else {
     respuesta = memoria[dialogo][Math.floor(Math.random() * memoria[dialogo].length)];
     if (respuesta == undefined) {
@@ -109,21 +86,28 @@ function hablayang(dialogo) {
 
     } else {
       speechSynthesis.speak(new SpeechSynthesisUtterance(respuesta));
-      
+
     }
   }
 }
 //anyang
-    if (annyang) {
-        annyang.setLanguage("es-PE");
-    // Definamos un comando.
-    const comandos = {'ola':() =>{speechSynthesis.speak(new SpeechSynthesisUtterance("SALUDOS"));},
-    "quien eres":()=>{hablayang("quien eres");}
+if (annyang) {
+  annyang.setLanguage("es-PE");
+  // Definamos un comando.
+  const comandos = {
+    'hola': () => { hablayang("hola"); },
+    'avi': () => { hablayang("avi"); },
+    'como estas': () => { hablayang("como estas"); },
+    'quién eres': () => { hablayang("quien eres"); }
   };
-    // Agrega nuestros comandos a annyang
-    annyang.addCommands(comandos);
-    annyang.addCommands(memoria);
-    
-    // Empieza a escuchar.
-    annyang.start();
-    }
+  // Agrega nuestros comandos a annyang
+  annyang.addCommands(comandos);
+  annyang.addCommands(memoria);
+
+  // Empieza a escuchar.
+  //annyang.start();
+  annyang.addCallback('errorNetwork', function () {
+    alert("no hay internet");
+  });
+
+}
